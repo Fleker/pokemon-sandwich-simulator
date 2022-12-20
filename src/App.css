@@ -42,6 +42,8 @@
   width: fit-content;
   height: fit-content;
   position: relative;
+  transition: all 0.1s;
+  box-shadow: rgba(0, 0, 0, 0) 0px 1px 1px 1px;
 }
 
 .clear-ingredients {
@@ -102,6 +104,14 @@
   flex-wrap: wrap;
 }
 
+.ingredient-div:hover {
+  box-shadow: rgba(0, 0, 0, 0.26) 0px 1px 1px 1px;
+}
+
+.ingredient-div:active {
+  box-shadow: rgba(0, 0, 0, 0.39) 0px 1px 1px 1px;
+}
+
 .condiment-bkg {
   background-color: rgba(0, 0, 255, 0.14);
   display: flex;
@@ -158,9 +168,26 @@
   margin: 10px;
 }
 
+/* 
+ * https://scarletviolet.pokemon.com/_images/trainers-guide/battling-pokemon/battling-pokemon/battling-pokemon-9-wild-pokemon-battle.jpg
+ */
 .button-spacing {
   cursor: pointer;
   margin: 10px;
+  background-color: #555;
+  border-radius: 4px;
+  color: white;
+  transition: all 0.1s;
+}
+
+.button-spacing:hover {
+  background-color: orange;
+  color: black;
+}
+
+.button-spacing:active {
+  background-color: red;
+  color: black;
 }
 
 .ingredient {
@@ -195,6 +222,8 @@
 .bubble-row {
   display: flex;
   flex-wrap: wrap;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .numbering {
@@ -216,7 +245,7 @@
 .bubble {
   display: flex;
   user-select: none;
-  border-radius: 25px;
+  border-radius: 8px;
   padding: 4px;
   width: fit-content;
   height: fit-content;
@@ -224,6 +253,39 @@
   font-size: 14px;
   margin: 2px;
   cursor: pointer;
+  transition: all 0.1s;
+}
+
+.search-panel .bubble {
+  border: solid 1px #555;
+  display: block;
+  background-color: #80808030;
+}
+
+.bubble > .sandwich-no {
+  float: left;
+}
+
+.bubble > .sandwich-name {
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.bubble.highlighted {
+  background-color: yellow;
+}
+
+.bubble.weird {
+  font-weight: bold;
+}
+
+.search-panel .bubble:hover {
+  background-color: #aaa !important;
+}
+
+.search-panel .bubble:active {
+  background-color: #777 !important;
+  color: white;
 }
 
 .bubble-min-width {
@@ -290,4 +352,37 @@
 
 small {
   font-size: 0.7em;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    /* Dark Theme */
+    background-color: #333;
+    color: #efefef;
+  }
+
+  input {
+    background-color: #555;
+    color: #efefef;
+  }
+
+  .clear-ingredients {
+    color: black;
+  }
+
+  .ingredient-div:hover {
+    box-shadow: rgba(255, 255, 255, 0.26) 0px 1px 1px 1px;
+  }
+  
+  .ingredient-div:active {
+    box-shadow: rgba(255, 255, 255, 0.39) 0px 1px 1px 1px;
+  }
+
+  .bubble.highlighted, .results .bubble-row {
+    color: black;
+  }
+
+  .bubble.highlighted {
+    background-color: gold;
+  }
 }
