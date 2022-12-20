@@ -4,6 +4,15 @@ import CONDIMENTS from './data/condiments.json';
 import FLAVORS from './data/flavors.json';
 import POWERS from './data/powers.json';
 import TYPES from './data/types.json';
+import ENGLISH from './language/strings.json';
+import SPANISH from './language/strings-es.json';
+import GERMAN from './language/strings-de.json';
+import JAPANESE from './language/strings-ja.json';
+import SIMPLIFIED_CHINESE from './language/strings-zh-CN.json';
+import TRADITIONAL_CHINESE from './language/strings-zh-TW.json';
+import FRENCH from './language/strings-fr.json';
+import ITALIAN from './language/strings-it.json';
+import { LANGUAGE } from './App';
 
 export const oneTwoFirst = [
   "31",
@@ -58,6 +67,17 @@ export const FLAVOR_TABLE = {
     "Sour": "Humungo",
     "Bitter": "Humungo",
   },
+};
+
+export const FLAVOR_TABLE_EZ = {
+  "Egg": "sweet-salty/bitter",
+  "Catch": "sweet/sour",
+  "Raid": "sweet/hot",
+  "Encounter": "salty-sweet/sour/hot",
+  "Exp": "salty/bitter",
+  "Teensy": "sour-salty/bitter/hot",
+  "Item": "bitter-sweet/sour/hot",
+  "Humungo": "hot-salty/sour/bitter",
 };
 
 export const FLAVOR_PRIORITY_TABLE = {
@@ -165,6 +185,46 @@ export const TYPE_EXCEPTIONS = {
   "39": ["Flying", "Poison", "Fighting"], // I'm convinced this is a game bug and it's only counting the flavors on apple once
 };
 
+export const LANGUAGE_STRINGS = {
+  'en': ENGLISH,
+  'es': SPANISH,
+  'de': GERMAN,
+  'ja': JAPANESE,
+  'zh-CN': SIMPLIFIED_CHINESE,
+  'zh-TW': TRADITIONAL_CHINESE,
+  'fr': FRENCH,
+  'it': ITALIAN
+  //'ru': RUSSIAN,
+  //'sv': SWEDISH
+};
+
+export const LANGUAGE_NAMES = {
+  'en': 'English',
+  'es': 'Español',
+  'de': 'Deutsch',
+  'ja': '日本',
+  'zh-CN': '简中',
+  'zh-TW': '繁中',
+  'fr': 'Français',
+  'it': 'Italiano'
+  //'ru': 'Pусский',
+  //'sv': 'Svenska'
+};
+
+export const ts = text => {
+  text = (text || "dammerung").toLowerCase();
+  const preStrings = LANGUAGE_STRINGS[LANGUAGE] || {};
+  const strings = {};
+  for (const [k, v] of Object.entries(preStrings)) {
+    strings[k.toLowerCase()] = v;
+  }
+  return strings[text] || "???";
+};
+
+export const getNumberOfPlayers = ingredients => {
+  return Math.max(1, Math.ceil(ingredients.fillings.length / 6), Math.ceil(ingredients.condiments.length / 4));
+};
+
 export const getFillings = strArr => {
   const ret = [];
   for (const str of strArr) {
@@ -202,9 +262,15 @@ export const getIngredientsFromRecipe = recipe => {
     const cNames = condimentStr.split(",");
 
     for (const str of fNames) {
-      const name = str.split("-")[0];
+      let name = str.split("-")[0];
       let pieces = str.split("-")[1];
       if (pieces) { pieces = parseInt(pieces); }
+
+      // support old egg name saved recipes
+      if (name === "Egg") {
+        name = "Sliced Egg";
+      }
+
       const filling = FILLINGS.filter(x => x.name === name)[0];
       if (filling) {
         fillings.push({ ...filling, pieces });
@@ -781,12 +847,12 @@ export const isFilling = obj => {
 };
 
 export const isFlavor = obj => {
-  const str = obj.flavor || obj;
+  const str = obj?.flavor || obj;
   return FLAVORS.indexOf(str) !== -1;
 };
 
 export const isPower = obj => {
-  const str = obj.type || obj;
+  const str = obj?.type || obj;
 
   for (const power of POWERS) {
     if (power.indexOf(str) !== -1) {
@@ -798,7 +864,7 @@ export const isPower = obj => {
 };
 
 export const isType = obj => {
-  const str = obj.type || obj;
+  const str = obj?.type || obj;
   return TYPES.indexOf(str) !== -1;
 };
 

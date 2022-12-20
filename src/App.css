@@ -201,6 +201,16 @@
   margin: 2px;
   width: fit-content;
   height: fit-content;
+  min-width: 100px;
+  position: relative;
+}
+
+#players-icon {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-family: monospace;
+  font-weight: bold;
 }
 
 .page-break {
@@ -386,3 +396,22 @@ small {
     background-color: gold;
   }
 }
+#power-flavors-description {
+  position: absolute;
+  width: fit-content;
+  top: 25px;
+  left: 46px;
+  font-style: italic;
+  font-weight: initial;
+  border: 1px dashed;
+  border-radius: 25px;
+  padding: 4px;
+  font-size: 12px;
+}
+
+.language-link {
+  padding-left: 4px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
